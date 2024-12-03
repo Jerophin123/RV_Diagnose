@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Link to the favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image to Detect Plant Health</h1>
+        <p>Select an image of a plant leaf to find out whether it is healthy or affected by a disease.</p>
+
+        <form id="uploadForm" action="/predict" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="file" name="file" accept="image/*" required onchange="previewImage(event)">
+                <button type="submit">Detect</button>
+            </div>
+        </form>
+
+        <!-- Image Preview -->
+        <div id="preview-container" style="display: none;">
+            <img id="preview-image" alt="Image Preview"/>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Display the result if available -->
+        {% if result %}
+            <h2>{{ result }} <span class="result-icon">{{ icon }}</span></h2>
+
+            <div class="result-animation">
+                {% if result == 'Healthy' %}
+                    <div class="tick-mark-animation"></div>
+                {% else %}
+                    <div class="cross-mark-animation"></div>
+                {% endif %}
+            </div>
+
+            <!-- More Details Button -->
+            {% if result != 'Healthy' and file_size_valid %}
+                <div class="more-details">
+                    <a href="{{ url_for('disease_details', disease=result) }}" class="details-button">More Details</a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function() {
+            // Hide the image preview
+            document.getElementById('preview-container').style.display = 'none';
+
+            // Show the loading spinner
+            document.getElementById('loading').style.display = 'block';
+        });
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const previewImage = document.getElementById('preview-image');
+                previewImage.src = reader.result;
+                previewImage.style.display = 'block';
+                document.getElementById('preview-container').style.display = 'block';
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rv Diagnoze</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 20px;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar .logo img {
+            max-height: 40px;
+            margin-right: 10px;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            color: #28a745;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+
+        .navbar a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .navbar .nav-links .active-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: #28a745;
+            transition: left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Additional styles for the Login and Signup links */
+        .auth-link {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .auth-link:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Hero Section Adjustment */
+        .hero-section {
+            background: url('{{ url_for('static', filename='images/hero-bg.png') }}') no-repeat center center/cover;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            animation: slideInFromLeft 1.5s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            animation: slideInFromRight 1.5s ease-out;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Translucent Button with Shadow */
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.4), 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-section {
+            background-color: white;
+            padding: 80px 20px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .about-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .about-section h2::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: #28a745;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-section p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .about-section img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: zoomIn 2s ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .about-section img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .features-section {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: #e9ecef;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .features-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            animation: zoomIn 1.5s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px) scale(1.08);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            background-color: #f8f9fa;
+        }
+
+        .feature-item img {
+            max-width: 60%;
+            height: auto;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover img {
+            transform: scale(1.15);
+        }
+
+        .how-it-works-section {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .how-it-works-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step-item {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .step-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-item img {
+            max-width: 60px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .step-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-section {
+            background-color: #e9ecef;
+            padding: 80px 20px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .testimonial-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+
+        .testimonials {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .testimonial-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: zoomIn 1.5s ease;
+        }
+
+        .testimonial-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-item p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .testimonial-item h4 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .testimonial-item span {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .cta-section {
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+
+        .contact-section {
+            padding: 80px 20px;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+
+        .contact-section p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .social-media-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .social-media-icons a {
+            color: #ffffff;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .social-media-icons a:hover {
+            color: #28a745;
+        }
+
+        .social-media-icons img {
+            width: 40px;
+            height: 40px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Scroll offset fix */
+        section {
+            scroll-margin-top: 80px; /* Adjust this value based on your navbar's height */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                <span>Rv Diagnoze</span>
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="{{ url_for('signup') }}" class="auth-link">Sign Up</a>
+                <a href="{{ url_for('login') }}" class="auth-link">Login</a>
+                <div class="active-indicator"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Plant Disease Detection</h1>
+            <p>Revolutionize your agricultural practices with our advanced AI detection system.</p>
+            <a href="#about" class="btn-primary">Learn More</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section" data-aos="fade-up">
+        <h2>About Us</h2>
+        <p>We provide cutting-edge AI solutions to help farmers detect plant diseases early, ensuring better crop health
+            and yield.</p>
+        <img src="{{ url_for('static', filename='images/about-us.png') }}" alt="About Us">
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section" data-aos="fade-up">
+        <h2>Features</h2>
+        <div class="features">
+            <div class="feature-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/feature1.png') }}" alt="Feature 1">
+                <h3>Accurate Detection</h3>
+                <p>Leverage AI to detect plant diseases with high precision, minimizing false positives.</p>
+            </div>
+            <div class="feature-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/feature2.png') }}" alt="Feature 2">
+                <h3>Real-Time Analysis</h3>
+                <p>Get real-time insights and actionable recommendations to protect your crops immediately.</p>
+            </div>
+            <div class="feature-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/feature3.png') }}" alt="Feature 3">
+                <h3>User-Friendly Interface</h3>
+                <p>An easy-to-use interface designed for farmers of all technical levels.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section" data-aos="fade-up">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/step1.png') }}" alt="Step 1">
+                <h3>Step 1: Capture Image</h3>
+                <p>Take a photo of your plant using our mobile app or web platform.</p>
+            </div>
+            <div class="step-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/step2.png') }}" alt="Step 2">
+                <h3>Step 2: Upload & Analyze</h3>
+                <p>Upload the image and let our AI analyze it for disease detection.</p>
+            </div>
+            <div class="step-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/step3.png') }}" alt="Step 3">
+                <h3>Step 3: Get Results</h3>
+                <p>Receive detailed results and recommendations to improve plant health.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonial-section" data-aos="fade-up">
+        <h2>What Our Users Say</h2>
+        <div class="testimonials">
+            <div class="testimonial-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/user1.jpg') }}" alt="User 1">
+                <p>"This app saved my crops last season. The accuracy of disease detection is impressive."</p>
+                <h4>John Doe</h4>
+                <span>Farmer, Kansas</span>
+            </div>
+            <div class="testimonial-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/user2.jpg') }}" alt="User 2">
+                <p>"I was skeptical at first, but now I can't imagine managing my farm without it."</p>
+                <h4>Jane Smith</h4>
+                <span>Orchard Owner, California</span>
+            </div>
+            <div class="testimonial-item" data-aos="fade-up">
+                <img src="{{ url_for('static', filename='images/user3.jpg') }}" alt="User 3">
+                <p>"Simple, efficient, and very helpful for any farmer looking to protect their plants."</p>
+                <h4>Mary Johnson</h4>
+                <span>Vegetable Grower, Florida</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section" data-aos="fade-up">
+        <h2>Protect Your Plants Today</h2>
+        <p>Join thousands of farmers who trust our AI technology for plant disease detection.</p>
+        <a href="{{ url_for('main_page') }}" class="btn-primary">Get Started</a>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section" data-aos="fade-up">
+        <h2>Contact Us</h2>
+        <p>Have questions or need assistance? Reach out to us through any of the platforms below.</p>
+        <div class="social-media-icons">
+            <a href="https://facebook.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/facebook-icon.png') }}" alt="Facebook">
+            </a>
+            <a href="https://twitter.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/twitter-icon.png') }}" alt="Twitter">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="{{ url_for('static', filename='images/instagram-icon.png') }}" alt="Instagram">
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 PlantCare. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // Shrinking Navbar on Scroll
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            const indicator = document.querySelector('.active-indicator');
+            const sections = document.querySelectorAll('section');
+
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 60;
+                const sectionHeight = section.clientHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+                    const activeLinkWidth = activeLink.offsetWidth;
+                    const activeLinkLeft = activeLink.offsetLeft;
+
+                    indicator.style.width = `${activeLinkWidth}px`;
+                    indicator.style.left = `${activeLinkLeft}px`;
+                }
+            });
+        });
+
+        // Initial setting of the active indicator
+        window.addEventListener('load', function () {
+            const navbar = document.querySelector('.navbar');
+            const indicator = document.querySelector('.active-indicator');
+            const activeLink = document.querySelector('.nav-links a[href="#about"]');  // Default active link to 'About Us'
+
+            indicator.style.width = `${activeLink.offsetWidth}px`;
+            indicator.style.left = `${activeLink.offsetLeft}px`;
+        });
+    </script>
+</body>
+
+</html>

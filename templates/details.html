@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap"rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Detailed Information</h1>
+
+        <!-- Updated Button Container -->
+        <div class="button-container">
+            <a href="{{ url_for('description_view', label=label, description=description) }}" class="details-button">Description</a>
+            <a href="{{ url_for('remedy_view', label=label, remedy=remedy) }}" class="details-button">Remedy</a>
+            <a href="{{ url_for('fertilizers_view', label=label, fertilizers=fertilizers) }}" class="details-button">Fertilizers</a>
+            <a href="{{ url_for('pesticides_view', label=label, pesticides=pesticides) }}" class="details-button">Pesticides</a>
+            <a href="{{ url_for('video_view', disease=label) }}" class="details-button">Full Video</a>
+            <a href="{{ url_for('main_page') }}" class="details-button">Back</a>
+        </div>
+    </div>
+</body>
+</html>
+

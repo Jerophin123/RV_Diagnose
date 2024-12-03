@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Plant</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: white;
+            padding: 1em 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a {
+            color: #28a745;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a.active {
+            color: #007BFF;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+
+        h1 {
+            text-align: center;
+            color: #28a745;
+            margin-bottom: 1em;
+        }
+
+        section {
+            margin-top: 2em;
+            padding: 2em;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-aos] {
+            opacity: 0;
+            transition-property: transform, opacity;
+            transition-timing-function: ease;
+        }
+
+        [data-aos].aos-animate {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        /* Button Styles */
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px; /* Adjusted padding for a larger button */
+            border: none;
+            border-radius: 50px; /* Makes the button rounded */
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            margin: 20px auto; /* Centers the button */
+            text-align: center;
+            display: block; /* Ensures the button is centered */
+            width: fit-content; /* Shrinks button to fit content */
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#description">Description</a>
+        <a href="#remedy">Remedy</a>
+        <a href="#fertilizers">Fertilizers</a>
+        <a href="#pesticides">Pesticides</a>
+    </div>
+
+    <div class="container">
+        <h1>Healthy Plant</h1>
+
+        <section id="description" data-aos="fade-up">
+            <h2>Description</h2>
+            <p>The plant is healthy with no visible signs of disease. Healthy plants exhibit vigorous growth, proper leaf color, and an absence of spots, lesions, or other symptoms of disease. Maintaining healthy plants involves regular monitoring, balanced fertilization, proper irrigation, and the use of resistant varieties. Healthy plants are more resilient to environmental stresses and less likely to succumb to pests and diseases.</p>
+        </section>
+
+        <section id="remedy" data-aos="fade-up">
+            <h2>Remedy</h2>
+            <p>✅ No action is needed for healthy plants. Continue regular care, including proper watering, fertilization, and pest management. 🌱 Maintain good agricultural practices to prevent disease onset, such as crop rotation, timely planting, and regular monitoring for early signs of stress or disease.</p>
+        </section>
+
+        <section id="fertilizers" data-aos="fade-up">
+            <h2>Fertilizers</h2>
+            <p>🌿 Continue with a balanced fertilizer regime to support healthy growth and development. 🌾 Ensure the correct application of nitrogen (N), phosphorus (P), and potassium (K) based on soil tests to maintain optimal plant health.</p>
+        </section>
+
+        <section id="pesticides" data-aos="fade-up">
+            <h2>Pesticides</h2>
+            <p>🌟 No pesticides are needed for healthy plants. However, regular monitoring for early signs of pests or diseases can help maintain plant health. 🛡️ Implement integrated pest management (IPM) strategies as a preventive measure.</p>
+        </section>
+        <!-- WhatsApp Send Button -->
+        <form action="{{ url_for('send_whatsapp') }}" method="POST">
+            <button type="submit" class="btn-primary">Send Details via WhatsApp</button>
+        </form>
+
+    </div>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200,
+            once: true
+        });
+
+        const navbarLinks = document.querySelectorAll('.navbar a');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let fromTop = window.scrollY + 80;
+
+            navbarLinks.forEach(link => {
+                let section = document.querySelector(link.hash);
+
+                if (
+                    section.offsetTop <= fromTop &&
+                    section.offsetTop + section.offsetHeight > fromTop
+                ) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

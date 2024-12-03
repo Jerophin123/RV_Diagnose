@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Spot</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: white;
+            padding: 1em 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a {
+            color: #28a745;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a.active {
+            color: #007BFF;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+
+        h1 {
+            text-align: center;
+            color: #28a745;
+            margin-bottom: 1em;
+        }
+
+        section {
+            margin-top: 2em;
+            padding: 2em;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-aos] {
+            opacity: 0;
+            transition-property: transform, opacity;
+            transition-timing-function: ease;
+        }
+
+        [data-aos].aos-animate {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        /* Button Styles */
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px; /* Adjusted padding for a larger button */
+            border: none;
+            border-radius: 50px; /* Makes the button rounded */
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            margin: 20px auto; /* Centers the button */
+            text-align: center;
+            display: block; /* Ensures the button is centered */
+            width: fit-content; /* Shrinks button to fit content */
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#description">Description</a>
+        <a href="#remedy">Remedy</a>
+        <a href="#fertilizers">Fertilizers</a>
+        <a href="#pesticides">Pesticides</a>
+        <a href="#video">Video</a>
+    </div>
+
+    <div class="container">
+        <h1>Brown Spot</h1>
+
+        <section id="description" data-aos="fade-up">
+            <h2>Description</h2>
+            <p>Brown Spot is a fungal disease affecting the leaves of rice plants, caused by the fungus Bipolaris oryzae. The disease is characterized by small, circular to oval lesions with a gray center and dark brown margins on the leaves. Brown Spot is most prevalent in nutrient-deficient soils, particularly those low in potassium, and in areas with poor water management. If severe, the disease can cause leaf drying, reduced photosynthesis, and ultimately, lower yields.</p>
+        </section>
+
+        <section id="remedy" data-aos="fade-up">
+            <h2>Remedy</h2>
+            <p>🌾 To manage Brown Spot, ensure proper field drainage and avoid water stagnation, as the fungus thrives in wet conditions. 🧴 Apply fungicides such as iprodione or mancozeb at the first sign of disease. Regularly remove and destroy infected plant debris to prevent the spread of spores. 🌱 Use resistant varieties and maintain optimal plant nutrition to enhance natural resistance. Avoid planting in areas with a history of severe Brown Spot outbreaks.</p>
+        </section>
+
+        <section id="fertilizers" data-aos="fade-up">
+            <h2>Fertilizers</h2>
+            <p>🌱 Balanced NPK (Nitrogen, Phosphorus, Potassium) fertilizers are recommended to promote healthy plant growth and enhance disease resistance. 💧 Ensure that potassium levels are adequate to strengthen plant tissues and reduce the impact of Brown Spot.</p>
+        </section>
+
+        <section id="pesticides" data-aos="fade-up">
+            <h2>Pesticides</h2>
+            <p>🧴 Application of mancozeb or similar fungicides is effective in controlling Brown Spot. 🌾 Regular monitoring and timely fungicide application can help minimize disease impact and protect the crop.</p>
+        </section>
+
+        <section id="video" data-aos="fade-up">
+            <h2>Video</h2>
+            <video controls>
+                <source src="{{ url_for('static', filename='videos/brown_spot.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+        <!-- WhatsApp Send Button -->
+        <form action="{{ url_for('send_whatsapp') }}" method="POST">
+            <button type="submit" class="btn-primary">Send Details via WhatsApp</button>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200,
+            once: true
+        });
+
+        const navbarLinks = document.querySelectorAll('.navbar a');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let fromTop = window.scrollY + 80;
+
+            navbarLinks.forEach(link => {
+                let section = document.querySelector(link.hash);
+
+                if (
+                    section.offsetTop <= fromTop &&
+                    section.offsetTop + section.offsetHeight > fromTop
+                ) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
