@@ -1,0 +1,318 @@
+/* General styles for both pages */
+body {
+    font-family: Arial, sans-serif, 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', 'Noto Sans Symbols';
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.4) 0%, rgba(46, 125, 50, 0.4) 100%), url('../static/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Adaptive light/dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, rgba(27, 94, 32, 0.4) 0%, rgba(20, 70, 20, 0.4) 100%), url('../static/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #ddd; /* Default text color for dark mode */
+    }
+
+    h1 {
+        color: rgba(255, 255, 255, 0.85); /* White text in dark mode */
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.4) 0%, rgba(46, 125, 50, 0.4) 100%), url('../static/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #333; /* Default text color for light mode */
+    }
+
+    h1 {
+        color: #000; /* Black text in light mode */
+    }
+}
+
+/* Mica effect (background glass effect) */
+.container {
+    background: rgba(255, 255, 255, 0.6); /* Light translucent */
+    backdrop-filter: blur(15px); /* Mica effect */
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease;
+    color: #333;
+}
+
+/* Dark mode container style with Mica Effect */
+@media (prefers-color-scheme: dark) {
+    .container {
+        background: rgba(30, 30, 30, 0.4); /* Dark translucent */
+        backdrop-filter: blur(15px); /* Mica effect */
+        color: #ddd; /* Ensure text in container is light in dark mode */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Headers */
+h1 {
+    font-size: 2.5em; /* Keep the font size large for visibility */
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Lighter shadow for subtle depth */
+    transition: color 0.3s ease;
+}
+
+/* Paragraphs */
+p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Form input group */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Input file style */
+input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+input[type="file"]:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+input[type="file"]:focus {
+    outline: 2px solid #4CAF50;
+    transform: scale(1.05);
+}
+
+/* Button styles */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px; /* Pill shape */
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #66BB6A;
+    transform: scale(1.05);
+}
+
+/* Existing button styles */
+.details-button, .back-button {
+    display: inline-block;
+    padding: 10px 30px; /* Increase padding for pill effect */
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px; /* Pill shape */
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Add gap between buttons for mobile devices */
+@media (max-width: 768px) {
+    .details-button, .back-button {
+        margin-bottom: 15px; /* Add space between buttons */
+    }
+}
+
+.details-button:hover, .back-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Loading animation */
+#loading {
+    display: none;
+    margin: 20px auto;
+}
+
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 8px solid #4CAF50;
+    border-right: 8px solid #22ff2955;
+    border-bottom: 8px solid #4CAF50;
+    border-left: 8px solid #22ff2955;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Image preview */
+#preview-container {
+    margin-top: 20px;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+#preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+#preview-image:hover {
+    transform: scale(1.05);
+}
+
+/* Rounded corners for the prediction result */
+h2 {
+    border-radius: 20px;
+    padding: 10px;
+}
+
+/* Adaptive styling for details view */
+.container-details {
+    padding: 30px;
+    text-align: left;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    input[type="file"], button {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2em; /* Adjust title size for smaller screens */
+    }
+
+    p {
+        font-size: 1em; /* Adjust paragraph size for smaller screens */
+    }
+}
+
+/* Container for the video section */
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.4) 0%, rgba(46, 125, 50, 0.4) 100%), url('../static/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 20px;
+    color: #333;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode styling for video page */
+@media (prefers-color-scheme: dark) {
+    .video-container {
+        background: linear-gradient(135deg, rgba(27, 94, 32, 0.4) 0%, rgba(20, 70, 20, 0.4) 100%), url('../static/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #ddd;
+    }
+}
+
+/* Mica effect container */
+.mica-container {
+    background: rgba(255, 255, 255, 0.6); /* Light translucent */
+    backdrop-filter: blur(15px); /* Mica effect */
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%; /* Responsive width */
+    max-width: 960px; /* Max width to maintain aspect ratio */
+    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeIn 1s ease;
+    color: #333;
+}
+
+/* Dark mode container style with Mica Effect */
+@media (prefers-color-scheme: dark) {
+    .mica-container {
+        background: rgba(30, 30, 30, 0.4); /* Dark translucent */
+        backdrop-filter: blur(15px); /* Mica effect */
+        color: #ddd; /* Ensure text in container is light in dark mode */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Video player styling */
+.video-player {
+    width: 100%;
+    height: auto;
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    margin-top: 20px;
+    transition: transform 0.3s ease;
+}
+
+.video-player:hover {
+    transform: scale(1.02); /* Slight zoom effect */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mica-container {
+        width: 100%; /* Full width on mobile */
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+}
+
+/* Additional styles for drag-and-drop */
+.upload-container {
+    border: 2px dashed #4CAF50;
+    padding: 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.upload-container.dragover {
+    background-color: #f0f0f0;
+    border-color: #66BB6A;
+}
